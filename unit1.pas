@@ -57,6 +57,8 @@ begin
     if (i2 = (i1 + 1)) then Break;
     inc := 2 * inc;
   end;
+  write('X increment = ');
+  writeLn(inc);
   result := inc;
 end;
 
@@ -74,6 +76,8 @@ begin
     if (j2 = (j1 + 1)) then Break;
     inc := 2 * inc;
   end;
+  write('Y increment = ');
+  writeLn(inc);
   result := inc;
 end;
 
@@ -83,7 +87,7 @@ var
   i, j: Integer;
 begin
   maxx := 3.0;
-  maxy := 2.0;
+  maxy := 2.5;
   sensx := SensibilityX(maxx);
   sensy := SensibilityY(maxy);
   x:= 0;
