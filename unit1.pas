@@ -28,82 +28,55 @@ implementation
 
 { TForm1 }
 
-function StartIncrement: Single;
+function Ti(i: Integer; maxx: Single): Integer;
 begin
-  result := 0.0001;
+  result := Round(((2.0 * i * maxx) / Form1.Height) - maxx);
 end;
 
-function Tx(x, maxx: Single): Integer;
+function Tj(j: Integer; maxy: Single): Integer;
 begin
-  result := Round(((x + maxx) * Form1.Width) / ( 2 * maxx));
+  result := Round( (((-2.0) * j * maxy) / Form1.Height) - maxy );
 end;
 
-function Ty(y, maxy: Single): Integer;
+function dist(x, y : Single): Single;
 begin
-  result := Round(((y - maxy) * Form1.Height) / (2 * maxy));
+  result := Sqrt((x*x) + (y*y));
 end;
 
-function SensibilityX(maxx: Single) : Single;
+function mandel(x, y : Single) : Integer;
 var
-  i1, i2 : Integer;
-  x, inc : Single;
+  cont : Integer;
+  nx, ny : Single;
 begin
-  x := 0;
-  i1:= Tx(x, maxx);
-  inc:= StartIncrement;
+  nx := x;
+  ny := y;
+  cont := 0;
   while (true) do
   begin
-    i2 := Tx(x + inc, maxx);
-    if (i2 = (i1 + 1)) then Break;
-    inc := 2 * inc;
+    nx := (x*x) - (y*y) + 1;
+    ny := 2 * x * y;
+    cont := cont + 1;
+    if (dist(nx, ny) > 2) then Break;
+    if (cont > 100) then Break;
   end;
-  write('X increment = ');
-  writeLn(inc);
-  result := inc;
-end;
-
-function SensibilityY(maxy: Single) : Single;
-var
-  j1, j2 : Integer;
-  y, inc : Single;
-begin
-  y := 0;
-  j1:= Ty(y, maxy);
-  inc:= StartIncrement;
-  while (true) do
-  begin
-    j2 := Ty(y + inc, maxy);
-    if (j2 = (j1 + 1)) then Break;
-    inc := 2 * inc;
-  end;
-  write('Y increment = ');
-  writeLn(inc);
-  result := inc;
+  result := cont
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
 var
-  x, y, maxx, maxy, sensx, sensy: Single;
+  x, y, maxx, maxy: Single;
   i, j: Integer;
 begin
   maxx := 3.0;
-  maxy := 2.5;
-  sensx := SensibilityX(maxx);
-  sensy := SensibilityY(maxy);
-  x:= 0;
-  while (true) do
+  maxy := 1.6875;
+  for i := 0 to Form1.Width do
   begin
-    i := Tx(x, maxx);
-    y := 0;
-    while (true) do
+    x := Ti(i, maxx);
+    for j := 0 to Form1.Height do
     begin
-      j := Ty(y, maxy);
-      Canvas.Pixels[i,j] := $0000FF;
-      y := y + sensy;
-      if (y > maxy) then Break;
+      y := Tj(j, maxy);
+      Canvas.Pixels[i,j] := $0000FF - mandel(x,y);
     end;
-    x := x + sensx;
-    if (x > maxx) then Break;
   end;
 end;
 

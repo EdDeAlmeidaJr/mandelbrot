@@ -4,14 +4,6 @@ object Form1: TForm1
   Top = 184
   Width = 640
   Caption = 'Form1'
-  ClientHeight = 360
-  ClientWidth = 640
   OnPaint = FormPaint
   LCLVersion = '2.2.0.4'
-  object Label1: TLabel
-    Left = 35
-    Height = 1
-    Top = 27
-    Width = 1
-  end
 end
