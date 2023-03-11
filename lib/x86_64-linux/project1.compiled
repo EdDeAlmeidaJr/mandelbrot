@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/bin/fpc" Date="1649687632"/>
+  <Params Value=" -MObjFPC -Scghi -Cg -O1 -gw3 -gl -l -vewnhibq -Fi/home/eddealmeida/dinossauro/mandelbrot/lib/x86_64-linux -Fu/home/eddealmeida/.lazarus/lib/units/x86_64-linux/gtk2 -Fu/home/eddealmeida/.lazarus/lib/LCLBase/units/x86_64-linux -Fu/home/eddealmeida/.lazarus/lib/freetypelaz/lib/x86_64-linux -Fu/usr/lib/lazarus/2.2.0/components/lazutils/lib/x86_64-linux -Fu/usr/lib/lazarus/2.2.0/packager/units/x86_64-linux -Fu/home/eddealmeida/dinossauro/mandelbrot/ -FU/home/eddealmeida/dinossauro/mandelbrot/lib/x86_64-linux/ -FE/home/eddealmeida/dinossauro/mandelbrot/ -o/home/eddealmeida/dinossauro/mandelbrot/project1 -dLCL -dLCLgtk2 project1.lpr"/>
+</CONFIG>
