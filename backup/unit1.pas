@@ -1,83 +1,91 @@
-unit Unit1;
+
+Unit Unit1;
 
 {$mode objfpc}{$H+}
 
-interface
+Interface
 
-uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls;
+Uses 
+Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, uComplex;
 
-type
+Type 
 
   { TForm1 }
 
-  TForm1 = class(TForm)
-    procedure FormPaint(Sender: TObject);
-  private
+  TForm1 = Class(TForm)
+    Procedure FormPaint(Sender: TObject);
+    Private 
 
-  public
+    Public 
 
-  end;
+  End;
 
-var
+Var 
   Form1: TForm1;
 
-implementation
+Implementation
 
 {$R *.lfm}
 
 { TForm1 }
 
-function Ti(i: Integer; maxx: Single): Integer;
-begin
-  result := Round(((2.0 * i * maxx) / Form1.Height) - maxx);
-end;
+Function Ti(i: integer; maxx: Double): Double;
+Begin
+  Result := maxx * (((2 * i) - Form1.Width) / Form1.Width);
+End;
 
-function Tj(j: Integer; maxy: Single): Integer;
-begin
-  result := Round( (((-2.0) * j * maxy) / Form1.Height) - maxy );
-end;
+Function Tj(j: integer; maxy: Double): Double;
+Begin
+  Result := maxy * ((Form1.Height - (2 * j)) / Form1.Height);
+End;
 
-function dist(x, y : Single): Single;
-begin
-  result := Sqrt((x*x) + (y*y));
-end;
+Function dist(x, y: Double): Double;
+Begin
+  Result := Sqrt((x * x) + (y * y));
+End;
 
-function mandel(x, y : Single) : Integer;
-var
-  cont : Integer;
-  nx, ny : Single;
-begin
-  nx := x;
-  ny := y;
+Function mandel(x, y: Double): TColor;
+
+Var 
+  cont, k: integer;
+  nx, ny, d1, d2: Double;
+Begin
+  d1 := dist(x, y);
+  d2 := d1;
   cont := 0;
-  while (true) do
-  begin
-    nx := (x*x) - (y*y) + 1;
-    ny := 2 * x * y;
-    if (dist(nx, ny) > 2) then Break;
-    cont := cont + 1;
-  end;
-  result := cont
-end;
+  While (True) Do
+    Begin
+      d1 := dist(x, y);
+      nx := (x * (x + 1)) - (y * y);
+      ny := ((2 * x) + 1) * y;
+      d2 := dist(nx,ny);
+      If (d2 > 2) Then Break;
+      x := nx;
+      y := ny;
+      cont := cont + 1;
+      If (Abs(d2 - d1) < 0.001) Then Break;
+      d2 := d1;
+    End;
+  Result := RGBToColor(254 - cont, 254 - (5 * cont), 254 - (9 * cont));
+End;
 
-procedure TForm1.FormPaint(Sender: TObject);
-var
-  x, y, maxx, maxy: Single;
-  i, j: Integer;
-begin
-  maxx := 3.0;
-  maxy := 1.6875;
-  for i := 0 to Form1.Width do
-  begin
-    x := Ti(i, maxx);
-    for j := 0 to Form1.Height do
-    begin
-      y := Tj(j, maxy);
-      Canvas.Pixels[i,j] := $0000FF - mandel(x,y);
-    end;
-  end;
-end;
+Procedure TForm1.FormPaint(Sender: TObject);
 
-end.
+Var 
+  x, y, maxx, maxy: Double;
+  i, j: integer;
+Begin
+  maxx := 2.0;
+  maxy := 1.1;
+  For i := 0 To Form1.Width Do
+    Begin
+      x := Ti(i, maxx);
+      For j := 0 To Form1.Height Do
+        Begin
+          y := Tj(j, maxy);
+          Canvas.Pixels[i, j] := mandel(x, y);
+        End;
+    End;
+End;
 
+End.

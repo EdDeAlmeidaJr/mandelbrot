@@ -6,7 +6,7 @@ Unit Unit1;
 Interface
 
 Uses 
-Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, uComplex;
+Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls;
 
 Type 
 
@@ -44,7 +44,8 @@ Begin
   Result := Sqrt((x * x) + (y * y));
 End;
 
-Function mandel(c: Complex): TColor;
+Function mandel(x, y: Double): TColor;
+
 Var 
   cont, k: integer;
   nx, ny, d1, d2: Double;
